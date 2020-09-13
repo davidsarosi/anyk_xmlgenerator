@@ -1,11 +1,9 @@
-﻿/App.config
-/obj/Release/Szamlakezeles.pdb
+﻿/obj/Release/Szamlakezeles.pdb
 /bin/Debug/Szamlakezeles.exe.config
 /obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
 /obj/Debug/Szamlakezeles.csproj.GenerateResource.cache
 /bin/Debug/Szamlakezeles.pdb
 /bin/Release/test1.xml
-/Properties/Settings.settings
 /obj/Release/Szamlakezeles.csprojAssemblyReference.cache
 /obj/Release/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
 /obj/Debug/Szamlakezeles.Properties.Resources.resources
@@ -17,9 +15,7 @@
 /obj/Release/Szamlakezeles.csproj.GenerateResource.cache
 /bin/Release/Szamlakezeles.exe
 /obj/Debug/Szamlakezeles.csprojAssemblyReference.cache
-/Properties/Resources.resx
 /obj/Debug/Szamlakezeles.exe
-/packages.config
 /obj/Debug/Szamlakezeles.Form1.resources
 /obj/Release/Szamlakezeles.csproj.CoreCompileInputs.cache
 /obj/Release/Szamlakezeles.Form1.resources
