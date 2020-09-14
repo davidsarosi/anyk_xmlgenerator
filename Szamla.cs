@@ -37,6 +37,7 @@ namespace Szamlakezeles
         /// 24 hosszú string tömböt kell megadni a konstruktornak
         /// </summary>
         /// <param name="values"></param>
+        //TODO double parser format provider
         public Szamla(string[] values)
         {
             for (int i = 0; i < 24; i++)

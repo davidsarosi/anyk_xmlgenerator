@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Szamlakezeles
 {
@@ -26,7 +27,17 @@ namespace Szamlakezeles
                     values[j] = cellvalue;
                     j++;
                 } while (j != 24);
-                SzamlaList.Add(new Szamla(values));
+
+                try
+                {
+                    SzamlaList.Add(new Szamla(values));
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("\nFormátumbeli hiba az excelben!\n Hibás sor: " + i,"HIBA" );
+                    
+                }
+               
                 i++;
             }
             Excelloader.Close();

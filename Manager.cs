@@ -55,24 +55,30 @@ namespace Szamlakezeles
 
                 foreach (var nyomtatvany in nyomtatvanyok.nyomtatvany)
                 {
-                    if(nyomtatvany.nyomtatvanyinformacio.nyomtatvanyazonosito.Equals("2065A"))
+                    if (nyomtatvany.nyomtatvanyinformacio.nyomtatvanyazonosito.Equals("2065A"))
+                    {
                         continue;
+                    }
+
                     if (nyomtatvany.nyomtatvanyinformacio.albizonylatazonositas.azonosito.Equals(
                         sz.elado_adoszama_torzsszam))
+                    {
                         dummy = nyomtatvany;
+                        break;
+                    }
                 }
 
                 int dynamic_page_counter;
                 int current_row;
-                nyomtatvany ny=new nyomtatvany();
+                nyomtatvany ny = new nyomtatvany();
                 int kezdes;
                 if (dummy != null)
                 {
-                    int pages = ((dummy.mezok.Length - 7) / 4)/36;   //TODO rounding
+                    int pages = ((dummy.mezok.Length - 7) / 4) / 36;
                     dynamic_page_counter = pages;
                     kezdes = ((dummy.mezok.Length - 7) / 4);
                     int newSize = (dummy.mezok.Length + (szamlalist.Count * 4));
-                   ny.mezok = new mezo[newSize];
+                    ny.mezok = new mezo[newSize];
                     for (int i = 0; i < dummy.mezok.Length; i++)
                     {
                         ny.mezok[i] = dummy.mezok[i];
@@ -80,15 +86,21 @@ namespace Szamlakezeles
 
                     for (int i = dummy.mezok.Length; i < ny.mezok.Length; i++)
                     {
-                        ny.mezok[i]=new mezo();
+                        ny.mezok[i] = new mezo();
                     }
-                    
+
+                    if (kezdes % 36 != 0&&kezdes!=0)
+                    {
+                        dynamic_page_counter += 1;
+                    }
+
                     dummy.mezok = ny.mezok;
                     ny = dummy;
                 }
                 else
                 {
-                    dynamic_page_counter = 0;
+                    dummy = null;
+                    dynamic_page_counter = 1;
                     kezdes = 0;
 
 
@@ -135,19 +147,19 @@ namespace Szamlakezeles
                     ny.mezok[6].Value = ig.ToString("yyyyMMdd");
                     ny.nyomtatvanyinformacio.idoszak.ig = ny.mezok[6].Value;
                 }
-                
+
                 int current_szamla_index = 0;
                 int offset;
-                
+                bool exists = dummy != null;
                 for (int i = 0; i < szamlalist.Count; i++)
                 {
-                    if (i % 37==0)
+                    if (kezdes%36==0&&kezdes!=0)
                     {
-                        dynamic_page_counter++;
+                        dynamic_page_counter = dynamic_page_counter + 1;
                     }
 
+                    current_row = (kezdes % 36) + 1;
                     offset = (kezdes + kezdes * 3);
-                    current_row = (kezdes % 36)+1;
                     ny.mezok[7 + offset].eazon = "0B" + dynamic_page_counter.ToString("D4") + "C" +
                                                  (current_row).ToString("D4") + "AA";
                     ny.mezok[7 + offset].Value = szamlalist[current_szamla_index].szamla_sorszama;
@@ -159,11 +171,14 @@ namespace Szamlakezeles
 
                     ny.mezok[9 + offset].eazon = "0B" + dynamic_page_counter.ToString("D4") + "C" +
                                                  (current_row).ToString("D4") + "CA";
-                    ny.mezok[9 + offset].Value = Math.Round(szamlalist[current_szamla_index].szamla_netto_osszege_forintban/1000.0).ToString("F0");
+                    ny.mezok[9 + offset].Value =
+                        Math.Round(szamlalist[current_szamla_index].szamla_netto_osszege_forintban / 1000.0)
+                            .ToString("F0");
 
                     ny.mezok[10 + offset].eazon = "0B" + dynamic_page_counter.ToString("D4") + "C" +
                                                   (current_row).ToString("D4") + "DA";
-                    ny.mezok[10 + offset].Value = Math.Round(szamlalist[current_szamla_index].szamla_afa_osszege_forintban/1000.0).ToString("F0");
+                    ny.mezok[10 + offset].Value = Math
+                        .Round(szamlalist[current_szamla_index].szamla_afa_osszege_forintban / 1000.0).ToString("F0");
 
                     current_szamla_index++;
                     kezdes++;
@@ -181,8 +196,12 @@ namespace Szamlakezeles
                 // ny.mezok[10].eazon = "0B0001C0001DA";
                 // ny.mezok[10].Value = sz.szamla_afa_osszege_forintban;
 
-                nyomtatvanyList.Add(ny);
+                if (dummy == null)
+                {
+                    nyomtatvanyList.Add(ny);
+                }
             }
+
             return nyomtatvanyList;
         }
 
@@ -192,7 +211,7 @@ namespace Szamlakezeles
             tempnyomtatvanyok.nyomtatvany = new nyomtatvany[1];
 
 
-            var temp = createNyomtatvanyList(szamla);// összefűzés megfordítás
+            var temp = createNyomtatvanyList(szamla); // összefűzés megfordítás
             var tempOriginal = dokumentum.nyomtatvany.ToList();
             foreach (var nyomtatvany in temp)
             {
@@ -202,13 +221,13 @@ namespace Szamlakezeles
             nyomtatvanyok.nyomtatvany = tempOriginal.ToArray();
         }
 
-        public void Export(nyomtatvanyok dokumentum,string path)
+        public void Export(nyomtatvanyok dokumentum, string path)
         {
-            dokumentum.abev=new abev();
+            dokumentum.abev = new abev();
             dokumentum.abev.hibakszama = 0;
             dokumentum.abev.hash = dokumentum.GetHashCode().ToString();
-          
-            
+
+
             XmlSerializer xs = new XmlSerializer(typeof(nyomtatvanyok));
 
             TextWriter txtWriter = new StreamWriter(path);
