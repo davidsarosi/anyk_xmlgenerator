@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,7 +105,8 @@ namespace Szamlakezeles
                     case 19:
                         if (values[i].Contains("-"))
                             values[i] = values[i].Replace("-", "0");
-                        szamla_netto_osszege_forintban = Double.Parse(values[i]);
+                        values[i] = values[i].Replace(",", ".");
+                        szamla_netto_osszege_forintban = Double.Parse(values[i],CultureInfo.InvariantCulture);
                         break;
                     case 20:
                         szamla_afa_osszege_a_szamla_penznemeben = values[i];
@@ -112,7 +114,8 @@ namespace Szamlakezeles
                     case 21:
                         if (values[i].Contains("-"))
                             values[i] =values[i].Replace("-", "0");
-                        szamla_afa_osszege_forintban = Double.Parse(values[i]);
+                        values[i] = values[i].Replace(",", ".");
+                        szamla_afa_osszege_forintban = Double.Parse(values[i],CultureInfo.InvariantCulture);
                         break;
                     case 22:
                         szamla_brutto_osszege_a_szamla_penznemeben = values[i];
