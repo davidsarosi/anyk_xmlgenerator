@@ -223,9 +223,9 @@ namespace Szamlakezeles
 
         public void Export(nyomtatvanyok dokumentum, string path)
         {
-            dokumentum.abev = new abev();
-            dokumentum.abev.hibakszama = 0;
-            dokumentum.abev.hash = dokumentum.GetHashCode().ToString();
+            // dokumentum.abev = new abev();
+            // dokumentum.abev.hibakszama = 0;
+            // dokumentum.abev.hash = dokumentum.GetHashCode().ToString();
 
 
             XmlSerializer xs = new XmlSerializer(typeof(nyomtatvanyok));
