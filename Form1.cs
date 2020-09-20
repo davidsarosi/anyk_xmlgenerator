@@ -55,14 +55,14 @@ namespace Szamlakezeles
                 if (ExcelTextbox.Text != "")
                 {
                     SzamlaCollection = new SzamlaCollection(ExcelTextbox.Text);
-                    string messeage = "K�sz";
+                    string messeage = "Kész";
                     MessageBox.Show(messeage);
                 }
             }
             catch (Exception)
             {
                 string messeage = "Nem kezelt hiba!";
-                MessageBox.Show(messeage, "Figyelmeztet�s", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(messeage, "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -82,14 +82,14 @@ namespace Szamlakezeles
                 {
                     XMLdocument = XMLManager.Beolvas(path);
                     xmlPath = path;
-                    string messeage = "K�sz";
+                    string messeage = "Kész";
                     MessageBox.Show(messeage);
                 }
             }
             catch (Exception)
             {
                 string messeage = "Nem kezelt hiba!";
-                MessageBox.Show(messeage, "Figyelmeztet�s", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(messeage, "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Szamlakezeles
             XMLManager.Ig = Ig;
             XMLManager.Osszefuz(XMLdocument, SzamlaCollection.SzamlaList);
             XMLManager.Export(XMLdocument,xmlPath);
-            string messeage = "K�sz";
+            string messeage = "Kész";
             MessageBox.Show(messeage);
         }
 
@@ -107,7 +107,7 @@ namespace Szamlakezeles
         {
             if(BevallasiIdoszakTol.Text != "")
             {
-                if (BevallasiIdoszakTol.Text[0] == '�')
+                if (BevallasiIdoszakTol.Text[0] == 'é')
                 {
                     BevallasiIdoszakTol.Text = "";
                 }
@@ -118,7 +118,7 @@ namespace Szamlakezeles
         {
             if (BevallasiIdoszakIg.Text != "")
             {
-                if (BevallasiIdoszakIg.Text[0] == '�')
+                if (BevallasiIdoszakIg.Text[0] == 'é')
                 {
                     BevallasiIdoszakIg.Text = "";
                 }
